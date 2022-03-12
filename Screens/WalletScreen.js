@@ -11,7 +11,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 
 // create a component
-const WalletScreen = () => {
+const WalletScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -41,6 +41,7 @@ const WalletScreen = () => {
           7,002<Text style={{ fontSize: 30 }}>.00</Text>
         </Text>
         <TouchableOpacity
+          onPress={() => navigation.navigate("Deposit")}
           style={{
             backgroundColor: "#02C1FE",
             padding: 5,
@@ -89,7 +90,10 @@ const WalletScreen = () => {
         </View>
       </View>
       <View styles={styles.sendBtnView}>
-        <TouchableOpacity style={styles.sendBtn}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SendMoney")}
+          style={styles.sendBtn}
+        >
           <Text style={{ fontSize: 25, fontWeight: "600", color: "white" }}>
             Send Money
           </Text>
