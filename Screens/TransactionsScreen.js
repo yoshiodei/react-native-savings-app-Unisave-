@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
-    backgroundColor: "pink",
+    backgroundColor: "#D3B3FF",
   },
   headerTitle: {
     fontSize: 25,
