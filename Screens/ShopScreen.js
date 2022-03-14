@@ -13,13 +13,13 @@ const ShopScreen = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-      headerStyle: { backgroundColor: '#D1D5EE' },
       gestureEnabled: false,
-      headerBackTitleVisible: false
+      headerBackTitleVisible: false,
+      header: () => null
     }}
     >
       <Stack.Screen name="Uni Shop" component={ShopList} />
-      <Stack.Screen name="Lexis iShop" component={SingleShop}/>
+      <Stack.Screen name="Single Shop" component={SingleShop}/>
       <Stack.Screen name="Shopitemscreen" component={Shopitemscreen} /> 
     </Stack.Navigator>
   );

@@ -1,59 +1,71 @@
-import { SafeAreaView, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from "react-native";
-import React from "react";
+import { SafeAreaView, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList } from "react-native";
+import React, {useState} from "react";
+import { Entypo } from '@expo/vector-icons';
 
-const SingleShop = ({navigation}) => {
+const SingleShop = ({navigation, route}) => {
 
-    const presshandler = () => {
-        navigation.navigate("Shopitemscreen")
+    let {name, data} = route.params;
+
+    const presshandler = (data) => {
+        navigation.navigate("Shopitemscreen", {data, name});
     }
+
+    const goBack = () => {
+        navigation.goBack();
+    }
+
+    Number.prototype.format = function () {
+        return this.toString().split( /(?=(?:\d{3})+(?:\.|$))/g ).join( "," );
+    };
+
+    let [search, setSearch] = useState("");
+
+    const filteredData = data.filter( item => item.name.toLowerCase().includes(search.toLowerCase()) );
 
     return (
       <SafeAreaView style={styles.container}>
-        {/* <View style={styles.headerView}>
-          <Text style={styles.headerText}>Lexis iShop</Text>
-        </View> */}
+
+
+        <View style={styles.headerView}>
+                <TouchableOpacity style={styles.goBackBtn} onPress={goBack} >
+                     <Entypo name="chevron-left" size={30} color="#4b51bc" />
+                </TouchableOpacity>
+                <Text style={styles.headerText}>{name}</Text>
+                <TouchableOpacity style={styles.iconBox}>
+                     <Entypo name="shopping-cart" size={24} color="#4b51bc" />
+                </TouchableOpacity>
+        </View>
+
+
         <View style={styles.searchView}>
           <TextInput
           placeholder="Search Item"
           style={styles.searchBox}
+          onChangeText={(text)=> setSearch(text)}
           />
         </View>
-        <ScrollView style={styles.listView}>
+
+
+        <View style={styles.listView}>
+        <FlatList
+        data={filteredData}
+        renderItem={({item})=>(
+            
           <TouchableOpacity style={styles.listItem}
-            onPress={presshandler}
+            onPress={()=> presshandler(item) }
           >
             <View style={styles.listItemImgBox}></View>
             <View style={styles.listItemTextBox}>
-              <Text style={{fontSize: 16, fontWeight: "600", color: "#484747"}}>Lexis iShop</Text>
-              <Text style={{fontSize: 14, color: "white"}}>Dealers in phones, laptops, tablet etc.</Text>
+              <Text style={{fontSize: 16, fontWeight: "600", color: "#434345", marginBottom: 5}}>{item.name}</Text>
+              <Text style={{fontSize: 22, color: "#7b7fd5", fontWeight: "700"}}>Gh¢ {item.price.format()}.00</Text>
             </View>
           </TouchableOpacity>
   
-          <TouchableOpacity style={styles.listItem}>
-            <View style={styles.listItemImgBox}></View>
-            <View style={styles.listItemTextBox}>
-              <Text style={{fontSize: 16, fontWeight: "600", color: "#484747"}}>Lexis iShop</Text>
-              <Text style={{fontSize: 14, color: "white"}}>Dealers in phones, laptops, tablet etc.</Text>
-            </View>
-          </TouchableOpacity>
-  
-          <View style={styles.listItem}>
-            <View style={styles.listItemImgBox}></View>
-            <View style={styles.listItemTextBox}>
-              <Text style={{fontSize: 16, fontWeight: "600" , color: "#484747"}}>Lexis iShop</Text>
-              <Text style={{fontSize: 14, color: "white"}}>Dealers in phones, laptops, tablet etc.</Text>
-            </View>
-          </View>
-  
-          <View style={styles.listItem}>
-            <View style={styles.listItemImgBox}></View>
-            <View style={styles.listItemTextBox}>
-              <Text style={{fontSize: 16, fontWeight: "600", color: "#484747"}}>Lexis iShop</Text>
-              <Text style={{fontSize: 14, color: "white"}}>Dealers in phones, laptops, tablet etc.</Text>
-            </View>
-          </View>
-          
-        </ScrollView>
+       
+        )}
+        />
+         </View>
+        
       </SafeAreaView>
     );
   };
@@ -73,6 +85,37 @@ const SingleShop = ({navigation}) => {
       justifyContent: "center",
       alignItems: "center",
       marginBottom: 20,
+      position: "relative",
+    },
+    goBackBtn: {
+       height: 30,
+       width: 30,
+       borderRadius: 4,
+    //    backgroundColor: "blue",
+       position: "absolute",
+       left: 10,
+       top: 15,
+    },
+    iconBox: {
+       height: 30,
+       width: 30,
+       borderRadius: 4,
+    //    backgroundColor: "blue",
+       justifyContent: "center",
+       alignItems: "flex-end",
+       position: "absolute",
+       right: 20,
+       top: 15,
+    },
+    dotView: {
+        height: 10,
+        width: 10,
+        borderRadius: 50,
+        backgroundColor: "tomato",
+        left: 3,
+        top: 1,
+        position: "absolute",
+        zIndex: 1,
     },
     searchView: {
       height: 60,
@@ -112,7 +155,7 @@ const SingleShop = ({navigation}) => {
       flex: 1
     },
     headerText: {
-      fontSize: 28,
+      fontSize: 18,
       fontWeight: "600",
       color: "#3E3E3E"
     },
