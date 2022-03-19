@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   password: {
-    marginVertical: 10,
+    marginVertical: 5,
   },
   passwordTitle: {
     fontSize: 18,
