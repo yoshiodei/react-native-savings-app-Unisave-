@@ -110,7 +110,6 @@ const TransactionsScreens = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5A01D3",
   },
   headerView: {
     height: "10%",
@@ -123,8 +122,6 @@ const styles = StyleSheet.create({
   transactionsLists: {
     height: "100%",
     padding: 20,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
     backgroundColor: "#D3B3FF",
   },
   headerTitle: {
