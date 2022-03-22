@@ -63,7 +63,6 @@ const WalletScreen = ({navigation}) => {
             <Text style={styles.sendMoneyText}>Send Money</Text>
           </TouchableOpacity>
         </View> 
-        
     </SafeAreaView>
   );
 };
@@ -81,6 +80,28 @@ const styles = StyleSheet.create({
     width: "100%",
     // backgroundColor: "pink",
     justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  listView: {
+    height: "50%",
+    paddingHorizontal: 20,
+  },
+  depositBtn: {
+    fontSize: 15,
+    color: "white",
+    fontWeight: "500",
+    textAlign: "center",
+  },
+  list: {
+    backgroundColor: "#D3B3FF",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  sendBtn: {
+    backgroundColor: "#5A01D3",
+    padding: 10,
+    width: "88%",
     alignItems: "center",
     marginBottom: 20,
     position: "relative",

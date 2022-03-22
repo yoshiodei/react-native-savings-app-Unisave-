@@ -31,7 +31,6 @@ const DepositScreen = ({navigation}) => {
             <Text style={styles.depositText}>Deposit</Text>
           </TouchableOpacity>
       </View> 
-        
     </SafeAreaView>
   );
 };

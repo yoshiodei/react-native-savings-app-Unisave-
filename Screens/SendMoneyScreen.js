@@ -38,7 +38,6 @@ const SendMoneyScreen = ({navigation}) => {
             <Text style={styles.sendText}>Send</Text>
           </TouchableOpacity>
       </View> 
-        
     </SafeAreaView>
   );
 };
