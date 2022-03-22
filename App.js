@@ -1,8 +1,8 @@
-import StackNav from "./Navigations/navigation";
-import Signupscreen from "./Screens/SignUpScreen";
+import HomeScreen from "./Screens/HomeScreen";
 
 export default function App() {
-  return <Signupscreen /> ;
+  return <HomeScreen/> ;
 }
 
 {/* <StackNav /> */}
+{/* <Signupscreen /> */}

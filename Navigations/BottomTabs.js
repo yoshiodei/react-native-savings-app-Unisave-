@@ -1,7 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import screens
-import WalletScreen from "../Screens/WalletScreen";
 import Dashboard from "../Screens/Dashboard";
 import ShopScreen from "../Screens/ShopScreen";
 import AccountScreen from "../Screens/AccountScreen";
@@ -12,6 +11,7 @@ import {
   AntDesign,
   Ionicons,
 } from "@expo/vector-icons";
+import Walletscreennav from "../Screens/WalletScreenNav";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +32,7 @@ function BottomTabs() {
     >
       <Tab.Screen
         name="Wallet"
-        component={WalletScreen}
+        component={Walletscreennav}
         options={{
           tabBarIcon: (props) => (
             <SimpleLineIcons name="wallet" size={28} color={props.color} />

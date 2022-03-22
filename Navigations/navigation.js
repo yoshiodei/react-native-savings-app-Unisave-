@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 function StackNav() {
   return (
-    <NavigationContainer>
+    
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -15,7 +15,7 @@ function StackNav() {
       >
         <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
-    </NavigationContainer>
+    
   );
 }
 
