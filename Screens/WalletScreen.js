@@ -1,104 +1,68 @@
 //import liraries
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
-//import icons
-import { MaterialIcons } from "@expo/vector-icons";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // create a component
-const WalletScreen = ({ navigation }) => {
+const WalletScreen = ({navigation}) => {
+
+  const goToDeposit = () => {
+    navigation.navigate("Deposit Screen");
+  }
+
+  const goToSendMoney = () => {
+    navigation.navigate("Send Money Screen");
+  } 
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerView}>
-        <Text style={{ fontSize: 25, fontWeight: "500", color: "white" }}>
-          Bilal's Wallet
-        </Text>
-      </View>
-      <View style={styles.amountView}>
-        <Text
-          style={{
-            fontSize: 25,
-            fontWeight: "600",
-            marginLeft: 30,
-            color: "grey",
-          }}
-        >
-          Ghc
-        </Text>
-        <Text
-          style={{
-            fontSize: 50,
-            fontWeight: "700",
-            textAlign: "center",
-            color: "#5A01D3",
-          }}
-        >
-          7,002<Text style={{ fontSize: 30 }}>.00</Text>
-        </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Deposit")}
-          style={{
-            backgroundColor: "#02C1FE",
-            padding: 5,
-            width: 150,
-            borderRadius: 20,
-            marginTop: 15,
-            alignSelf: "flex-end",
-          }}
-        >
-          <Text style={styles.depositBtn}>+ Make Deposit</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.listView}>
-        <View style={styles.list}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={{ fontSize: 20, fontWeight: "600" }}>
-              Estimated Interest
-            </Text>
-            <MaterialIcons name="info" size={25} color="white" />
-          </View>
-          <Text style={{ fontSize: 18, marginTop: 5 }}>Ghc 865.04</Text>
+      
+        <View style={styles.headerView}>
+            <Text style={styles.headerText}>Wallet</Text>
+            <TouchableOpacity style={styles.iconBox}>
+                     {/* <Entypo name="shopping-cart" size={24} color="#4b51bc" /> */}
+                     <MaterialCommunityIcons name="bell" size={24} color="#4b51bc" />
+            </TouchableOpacity>
+            
+        </View> 
+        <View style={styles.savingsView}>
+          <Text style={{ fontSize: 28, fontWeight: "700", color: "dimgray" }}>Gh¢</Text>
+          <Text style={{ fontSize: 60, fontWeight: "700", textAlign: "center",color: "#7b7fd5"  }}>7,308.50</Text>
         </View>
-        <View style={styles.list}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={{ fontSize: 20, fontWeight: "600" }}>Dept To Pay</Text>
-            <MaterialIcons name="info" size={25} color="white" />
-          </View>
-          <Text style={{ fontSize: 18, marginTop: 5 }}>
-            You have no depts to pay
-          </Text>
+        <View style={styles.depositView}>
+          <TouchableOpacity style={styles.depositBtn} onPress={goToDeposit}>
+            <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }} >+ Deposit</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.list}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={{ fontSize: 20, fontWeight: "600" }}>
-              Current Points
-            </Text>
-            <MaterialIcons name="info" size={25} color="white" />
+        <View style={styles.infoCardView}>
+          <View style={styles.cardView}>
+            <TouchableOpacity style={styles.cardInfoBtn}>
+              <Text style={styles.cardInfoText}>i</Text>
+            </TouchableOpacity>
+            <Text style={styles.cardViewTopText}>Estimated Interest</Text>
+            <Text style={styles.cardViewBottomText}>Gh¢ 865.04</Text>
           </View>
-          <Text style={{ fontSize: 18, marginTop: 5 }}>50 pts</Text>
-        </View>
-      </View>
-      <View styles={styles.sendBtnView}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SendMoney")}
-          style={styles.sendBtn}
-        >
-          <Text style={{ fontSize: 25, fontWeight: "600", color: "white" }}>
-            Send Money
-          </Text>
-        </TouchableOpacity>
-      </View>
+          <View style={styles.cardView}>
+            <TouchableOpacity style={styles.cardInfoBtn}>
+              <Text style={styles.cardInfoText}>i</Text>
+            </TouchableOpacity>
+            <Text style={styles.cardViewTopText}>Debt To Pay</Text>
+            <Text style={styles.cardViewBottomText}>You have no debts to pay</Text>
+          </View>
+          <View style={styles.cardView}>
+           <TouchableOpacity style={styles.cardInfoBtn}>
+              <Text style={styles.cardInfoText}>i</Text>
+            </TouchableOpacity>
+            <Text style={styles.cardViewTopText}>Current Points</Text>
+            <Text style={styles.cardViewBottomText}>50 points</Text>
+          </View>
+        </View> 
+        <View style={{width: "100%", paddingHorizontal: 20}}>
+          <TouchableOpacity style={styles.sendMoneyBtn} onPress={goToSendMoney}>
+            <Text style={styles.sendMoneyText}>Send Money</Text>
+          </TouchableOpacity>
+        </View> 
     </SafeAreaView>
   );
 };
@@ -107,16 +71,14 @@ const WalletScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
-    height: "10%",
-    backgroundColor: "#5A01D3",
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  amountView: {
-    height: "25%",
+    height: 60,
+    width: "100%",
+    // backgroundColor: "pink",
     justifyContent: "center",
     paddingHorizontal: 20,
   },
@@ -141,10 +103,103 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "88%",
     alignItems: "center",
-    marginHorizontal: 20,
-    borderRadius: 50,
-    marginTop: 15,
+    marginBottom: 20,
+    position: "relative",
   },
+  headerText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#3E3E3E"
+  },
+  savingsView: {
+    // backgroundColor: "pink",
+    width: "100%",
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  depositBtn: {
+    backgroundColor: "#1dd621",
+    height: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 120,
+    borderRadius: 50,
+  },
+  depositView: {
+    height: 30,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    paddingHorizontal: 20,
+  },
+  infoCardView: {
+    flex: 1,
+    width: "100%",
+    // backgroundColor: "pink",
+    marginTop: 15,
+    paddingHorizontal: 20,
+  },
+  cardView: {
+    borderRadius: 8,
+    backgroundColor: "#BAC1EE",
+    width: "100%",
+    height: 70,
+    marginBottom: 10,
+    padding: 8,
+    position: "relative",
+  },
+  cardInfoBtn:{
+    width: 17,
+    height: 17,
+    position: "absolute",
+    top: 8,
+    right: 8,
+    borderRadius: 50,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardInfoText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "dimgray",
+  },
+  sendMoneyBtn: {
+    backgroundColor: "#4b51bc",
+    height: 50,
+    width: "100%",
+    borderRadius: 50,
+    marginVertical: 20,
+    justifyContent: "center",
+    alignItems: "center",
+},
+  sendMoneyText: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "500",
+  },
+  cardViewBottomText:{
+    fontSize: 18,
+    fontWeight: "500",
+    color: "white",
+  },
+  cardViewTopText:{
+    marginBottom: 2,
+    color: "#7b7fd5",
+    fontSize: 20,
+    fontWeight: "700",
+  },
+  iconBox: {
+    height: 30,
+    width: 30,
+    borderRadius: 4,
+    // backgroundColor: "blue",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    position: "absolute",
+    right: 20,
+    top: 15,
+ },
 });
 
 //make this component available to the app

@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 
 function StackNav() {
   return (
-    <NavigationContainer>
+    
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -31,7 +31,7 @@ function StackNav() {
         <Stack.Screen name="Withdraw" component={WithdrawScreen} />
         <Stack.Screen name="RequestLoan" component={RequestLoan} />
       </Stack.Navigator>
-    </NavigationContainer>
+    
   );
 }
 

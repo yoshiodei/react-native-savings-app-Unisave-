@@ -1,24 +1,30 @@
 //import liraries
+import { createStackNavigator } from '@react-navigation/stack';
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import Shopitemscreen from './ShopItemScreen';
+import ShopList from './ShopList';
+import SingleShop from './SingleShop';
+
+const Stack = createStackNavigator();
 
 // create a component
 const ShopScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>ShopScreen</Text>
-    </View>
+    <Stack.Navigator
+      screenOptions={{
+      gestureEnabled: false,
+      headerBackTitleVisible: false,
+      header: () => null
+    }}
+    >
+      <Stack.Screen name="Uni Shop" component={ShopList} />
+      <Stack.Screen name="Single Shop" component={SingleShop}/>
+      <Stack.Screen name="Shopitemscreen" component={Shopitemscreen} /> 
+    </Stack.Navigator>
   );
 };
 
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 //make this component available to the app
 export default ShopScreen;

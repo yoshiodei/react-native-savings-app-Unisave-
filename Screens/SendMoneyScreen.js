@@ -1,67 +1,43 @@
 //import liraries
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { Entypo } from '@expo/vector-icons';
 
 // create a component
-const SendMoneyScreen = ({ navigation }) => {
+const SendMoneyScreen = ({navigation}) => {
+
+    const goBack = () => {
+        navigation.goBack();
+    }
+
   return (
     <SafeAreaView style={styles.container}>
+      
       <View style={styles.headerView}>
-        <Ionicons
-          onPress={() => navigation.goBack()}
-          name="arrow-back"
-          size={30}
-          color="white"
-        />
-        <Text style={styles.headerTitle}>Send Money</Text>
-        <View></View>
+                <TouchableOpacity style={styles.goBackBtn} onPress={goBack} >
+                     <Entypo name="chevron-left" size={30} color="#4b51bc" />
+                </TouchableOpacity>
+                <Text style={styles.headerText}>Send Money</Text>   
       </View>
 
-      <View style={styles.amountView}>
-        <Text
-          style={{
-            fontSize: 25,
-            fontWeight: "600",
-            marginLeft: 30,
-            color: "grey",
-          }}
-        >
-          Ghc
-        </Text>
-        <TextInput
-          style={styles.amountInput}
-          keyboardType="numeric"
-          placeholder="Enter Amount"
-        />
+      <View style={styles.sendAmountView}>
+          <Text style={{ fontSize: 28, fontWeight: "700", color: "dimgray" }}>Gh¢</Text>
+          <TextInput style={ styles.sendInput } keyboardType="numbers-and-punctuation" />
+          
+          <Text style={{ fontSize: 16, fontWeight: "500", color: "dimgray", marginBottom: 5, }}>Recipient Code / Phone Number</Text>
+          <TextInput style={ styles.codeInput } />
+
+          <TouchableOpacity style={styles.scanBtn} >
+            <Text style={styles.scanBtnText}>Scan Recipient QR Code</Text>
+          </TouchableOpacity>
       </View>
 
-      <View styles={styles.receipientView}>
-        <Text style={{ marginBottom: 5, color: "grey", marginLeft: 20 }}>
-          Reciepient Code / Phone Number
-        </Text>
-        <TextInput style={styles.receipientInput} />
-        <TouchableOpacity style={styles.scanCodeBtn}>
-          <Text style={{ fontSize: 25, color: "white", textAlign: "center" }}>
-            Scan Code
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.sendBtnView}>
-        <TouchableOpacity style={styles.sendBtn}>
-          <Text style={{ fontSize: 25, fontWeight: "600", color: "white" }}>
-            Send Money
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <View style={{width: "100%", paddingHorizontal: 20, flex: 1, justifyContent: "flex-end", }}>
+          <TouchableOpacity style={styles.sendBtn} >
+            <Text style={styles.sendText}>Send</Text>
+          </TouchableOpacity>
+      </View> 
     </SafeAreaView>
   );
 };
@@ -70,57 +46,86 @@ const SendMoneyScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
-    height: "10%",
-    flexDirection: "row",
-    backgroundColor: "#5A01D3",
+    height: 60,
+    width: "100%",
+    // backgroundColor: "pink",
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
+    marginBottom: 20,
+    position: "relative",
+  },
+  goBackBtn: {
+     height: 30,
+     width: 30,
+     borderRadius: 4,
+  //    backgroundColor: "blue",
+     position: "absolute",
+     left: 10,
+     top: 15,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#3E3E3E"
+  },
+  codeInput: {
+      borderRadius: 8,
+      backgroundColor: "#dee2ee",
+      height: 55,
+      padding: 10,
+      marginBottom: 15,
+  },
+  sendAmountView: {
+    // backgroundColor: "pink",
+    width: "100%",
     paddingHorizontal: 20,
+    marginBottom: 10,
   },
-  amountView: {
-    marginVertical: 20,
-    paddingHorizontal: 20,
-  },
-  headerTitle: {
-    fontSize: 25,
-    fontWeight: "500",
-    color: "white",
-  },
-  amountInput: {
-    fontSize: 50,
-    fontWeight: "700",
-    color: "#5A01D3",
+  sendInput: {
+    height: 100,
     textAlign: "center",
-    padding: 10,
-    borderBottomColor: "#5A01D3",
-    borderBottomWidth: 1,
+    color: "#7b7fd5", 
+    borderBottomColor: "darkgray",
+    borderBottomWidth: 2,
+    fontSize: 60,
+    backgroundColor: "#dee2ee",
+    marginTop: 10,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
+    marginBottom: 20,
   },
-  receipientInput: {
-    fontSize: 20,
-    width: "90%",
-    backgroundColor: "#D0E8F0",
-    borderRadius: 5,
-    padding: 10,
-    marginLeft: 20,
-  },
-  scanCodeBtn: {
-    backgroundColor: "#02C1FE",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 15,
-    marginHorizontal: 20,
+
+  scanBtn: {
+    borderRadius: 8,
+    height: 55,
+    backgroundColor: "#1dd621",
+    justifyContent: "center",
+    alignItems: "center",
   },
   sendBtn: {
-    backgroundColor: "#5A01D3",
-    padding: 10,
-    width: "88%",
-    alignItems: "center",
-    marginHorizontal: 20,
+    backgroundColor: "#4b51bc",
+    height: 50,
+    width: "100%",
     borderRadius: 50,
-    marginTop: "25%",
+    marginVertical: 20,
+    justifyContent: "center",
+    alignItems: "center",
+},
+sendText: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "500",
   },
+scanBtnText: {
+    fontSize: 18,
+    color: "white",
+    fontWeight: "600",
+},
 });
 
 //make this component available to the app
