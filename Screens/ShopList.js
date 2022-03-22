@@ -1,6 +1,6 @@
 import { SafeAreaView, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList  } from "react-native";
 import React, {useState} from "react";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, FontAwesome } from '@expo/vector-icons';
 
 
 const ShopList = ({navigation}) => {
@@ -175,9 +175,10 @@ const ShopList = ({navigation}) => {
                     style={styles.listItem}
                     onPress={()=>handlePress(item.name, item.items)}
                     >
-                        <View style={styles.listItemImgBox}></View>
+                        <View style={styles.listItemImgBox}>
+                        </View>
                         <View style={styles.listItemTextBox}>
-                        <Text style={{fontSize: 16, fontWeight: "600", color: "#484747"}}>
+                        <Text style={{fontSize: 16, fontWeight: "700", color: "#6f74cb",}}>
                             {item.name}</Text>
                         <Text style={{fontSize: 14, color: "white"}}>{item.description}</Text>
                         </View>

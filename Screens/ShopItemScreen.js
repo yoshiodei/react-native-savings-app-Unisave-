@@ -48,34 +48,34 @@ const Shopitemscreen = ({navigation, route}) => {
                 </View>
                 <View style={styles.headerView}>
                     <Text style={{
-                        fontSize: 18,
-                        color: "#3E3E3E",
+                        fontSize: 24,
+                        color: "#7b7fd5",
                         fontWeight: "700"
                         }}>{data.name}</Text>
                 </View>
                 <View style={{marginBottom: 15}}>
                     <Text style={{
                         fontSize: 14,
-                        color: "#4b51bc",
+                        color: "#555557",
                         fontWeight: "800",
                         marginBottom: 2
                     }}>Price</Text>
                     <View style={styles.priceView}>
-                        <Text style={[{color: "#403f3f", marginRight: 10},styles.priceText]}>Gh¢</Text>
-                        <Text style={[{color: "#403f3f"},styles.priceText]}>{data.price.format()}.00</Text>
+                        <Text style={[{color: "#7b7fd5", marginRight: 10},styles.priceText]}>Gh¢</Text>
+                        <Text style={[{color: "#7b7fd5"},styles.priceText]}>{data.price.format()}.00</Text>
                     </View>
                 </View>
                 <View style={{marginBottom: 15}}>
                     <Text style={{
                         fontSize: 14,
-                        color: "#4b51bc",
+                        color: "#555557",
                         fontWeight: "800",
                         marginBottom: 7
                     }}>Description</Text>
                     <View>
                         <Text style={{
                         fontSize: 14,
-                        color: "#403f3f",
+                        color: "#7b7fd5",
                         fontWeight: "500",
                     }}>
                             {data.description} 
@@ -85,7 +85,7 @@ const Shopitemscreen = ({navigation, route}) => {
                 <View>
                     <Text style={{
                         fontSize: 14,
-                        color: "#4b51bc",
+                        color: "#555557",
                         fontWeight: "800",
                         marginBottom: 10
                     }}>Quantity</Text>

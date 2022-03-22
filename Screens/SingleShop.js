@@ -48,6 +48,7 @@ const SingleShop = ({navigation, route}) => {
 
         <View style={styles.listView}>
         <FlatList
+        showsVerticalScrollIndicator="false"
         data={filteredData}
         renderItem={({item})=>(
             
@@ -56,8 +57,8 @@ const SingleShop = ({navigation, route}) => {
           >
             <View style={styles.listItemImgBox}></View>
             <View style={styles.listItemTextBox}>
-              <Text style={{fontSize: 16, fontWeight: "600", color: "#434345", marginBottom: 5}}>{item.name}</Text>
-              <Text style={{fontSize: 22, color: "#7b7fd5", fontWeight: "700"}}>Gh¢ {item.price.format()}.00</Text>
+              <Text style={{fontSize: 16, fontWeight: "700", color: "#7b7fd5", marginBottom: 5}}>{item.name}</Text>
+              <Text style={{fontSize: 22, color: "white" , fontWeight: "700"}}>Gh¢ {item.price.format()}.00</Text>
             </View>
           </TouchableOpacity>
   
@@ -135,18 +136,20 @@ const SingleShop = ({navigation, route}) => {
     listItem: {
       height: 90,
       width: "100%", 
-      borderRadius: 8,
-      backgroundColor: "#BAC1EE",
+      // borderRadius: 8,
+      // backgroundColor: "#BAC1EE",
       marginBottom: 10,
-      paddingHorizontal: 8,
+      paddingBottom: 8,
       justifyContent: "flex-start",
       alignItems: "center",
       flexDirection: "row",
+      borderBottomWidth: 1,
+      borderBottomColor: "#bfbfc3",
     },
     listItemImgBox: {
-      height: 75,
-      width: 75,
-      borderRadius: 6,
+      height: "100%",
+      width: 150,
+      borderRadius: 2,
       backgroundColor: "white",
       marginRight: 10,
     },
