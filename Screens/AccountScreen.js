@@ -112,7 +112,17 @@ const AccountScreen = ({ navigation }) => {
         <Slider
           childrenContainer={{}}
           onEndReached={() => {
-            Alert.alert("Do You Want To Sign Out");
+            Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+              },
+              {
+                text: "OK",
+                onPress: () => navigation.navigate("Signinscreen"),
+              },
+            ]);
           }}
           containerStyle={{
             backgroundColor: "#D3B3FF",
