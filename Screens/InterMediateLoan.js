@@ -1,17 +1,17 @@
 //import liraries
-import React, { Component } from "react";
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TextInput,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 // create a component
-const WithdrawScreen = ({ navigation }) => {
+const IntermediateLoan = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -20,7 +20,7 @@ const WithdrawScreen = ({ navigation }) => {
           name="chevron-back"
           size={30}
         />
-        <Text style={styles.headerTitle}>Withdraw Money</Text>
+        <Text style={styles.headerTitle}>Intermediate Loan</Text>
         <View></View>
       </View>
 
@@ -41,8 +41,8 @@ const WithdrawScreen = ({ navigation }) => {
 
       <View style={styles.submitBtnView}>
         <TouchableOpacity style={styles.submitBtn}>
-          <Text style={{ fontSize: 25, fontWeight: "600", color: "white" }}>
-            Withdraw
+          <Text style={{ fontSize: 25, fontWeight: "500", color: "white" }}>
+            Request
           </Text>
         </TouchableOpacity>
       </View>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   amountInput: {
     fontSize: 50,
-    fontWeight: "700",
+    fontWeight: "600",
     color: "#5A01D3",
     textAlign: "center",
     padding: 10,
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default WithdrawScreen;
+export default IntermediateLoan;

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
+import { TextInput } from "react-native-gesture-handler";
 
 // create a component
 const SetPinScreen = ({ navigation }) => {
@@ -17,9 +18,8 @@ const SetPinScreen = ({ navigation }) => {
       <View style={styles.headerView}>
         <Ionicons
           onPress={() => navigation.goBack()}
-          name="arrow-back"
+          name="chevron-back"
           size={30}
-          color="white"
         />
         <Text style={styles.headerTitle}>Set PIN</Text>
         <View></View>
@@ -36,8 +36,14 @@ const SetPinScreen = ({ navigation }) => {
           </Text>
         </View>
 
-        <View style={{ alignItems: "center", marginTop: 40 }}>
-          <SmoothPinCodeInput
+        <View style={{ alignItems: "center", paddingTop: 20 }}>
+          <TextInput
+            style={styles.setPinInput}
+            secureTextEntry={true}
+            maxLength={4}
+            keyboardType="numeric"
+          />
+          {/* <SmoothPinCodeInput
             // mask="*"
             //placeholder="•"
             cellSize={50}
@@ -64,7 +70,7 @@ const SetPinScreen = ({ navigation }) => {
             restrictToNumbers={true}
             //value={code}
             //onTextChange={(code) => this.setState({ code })}
-          />
+          /> */}
         </View>
       </View>
 
@@ -83,11 +89,11 @@ const SetPinScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
     height: "10%",
     flexDirection: "row",
-    backgroundColor: "#5A01D3",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
@@ -96,9 +102,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   headerTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "500",
-    color: "white",
+  },
+  setPinInput: {
+    fontSize: 25,
+    padding: 10,
+    letterSpacing: 20,
+    textAlign: "center",
+    backgroundColor: "white",
+    borderColor: "#5A01D3",
+    borderWidth: 1,
+    width: "60%",
+    borderRadius: 5,
   },
   pinBtn: {
     backgroundColor: "#5A01D3",

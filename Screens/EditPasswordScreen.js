@@ -17,9 +17,8 @@ const EditPasswordScreen = ({ navigation }) => {
       <View style={styles.headerView}>
         <Ionicons
           onPress={() => navigation.goBack()}
-          name="arrow-back"
+          name="chevron-back"
           size={30}
-          color="white"
         />
         <Text style={styles.headerTitle}>Reset Password</Text>
         <View></View>
@@ -70,11 +69,11 @@ const EditPasswordScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
     height: "10%",
     flexDirection: "row",
-    backgroundColor: "#5A01D3",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
@@ -88,9 +87,8 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   headerTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "500",
-    color: "white",
   },
   password: {
     marginVertical: 5,
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
     width: "100%",
-    backgroundColor: "#C6E3F6",
+    backgroundColor: "#F6F6F6",
     borderRadius: 5,
   },
   resetBtn: {

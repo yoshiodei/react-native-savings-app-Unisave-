@@ -24,7 +24,7 @@ const AccountScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
-        <Text style={{ fontSize: 25, fontWeight: "500", color: "white" }}>
+        <Text style={{ fontSize: 20, fontWeight: "500", textAlign: "center" }}>
           My Account
         </Text>
       </View>
@@ -33,7 +33,7 @@ const AccountScreen = ({ navigation }) => {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D3B3FF",
+            backgroundColor: "#BAC1EE",
             padding: 10,
             borderRadius: 10,
           }}
@@ -125,7 +125,7 @@ const AccountScreen = ({ navigation }) => {
             ]);
           }}
           containerStyle={{
-            backgroundColor: "#D3B3FF",
+            backgroundColor: "#BAC1EE",
             borderRadius: 10,
             overflow: "hidden",
             alignItems: "center",
@@ -164,10 +164,10 @@ const AccountScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
     height: "10%",
-    backgroundColor: "#5A01D3",
     justifyContent: "center",
     paddingHorizontal: 20,
   },
