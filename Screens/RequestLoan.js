@@ -17,9 +17,8 @@ const RequestLoan = ({ navigation }) => {
       <View style={styles.headerView}>
         <Ionicons
           onPress={() => navigation.goBack()}
-          name="arrow-back"
+          name="chevron-back"
           size={30}
-          color="white"
         />
         <Text style={styles.headerTitle}>Request Loan</Text>
         <View></View>
@@ -28,7 +27,7 @@ const RequestLoan = ({ navigation }) => {
       <View>
         <Text
           style={{
-            fontSize: 18,
+            fontSize: 15,
             fontWeight: "600",
             textAlign: "center",
             margin: 10,
@@ -38,7 +37,7 @@ const RequestLoan = ({ navigation }) => {
         </Text>
 
         <View style={styles.listView}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Intermediate")}>
             <View style={styles.list}>
               <View
                 style={{
@@ -57,7 +56,7 @@ const RequestLoan = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Standard")}>
             <View style={styles.list}>
               <View
                 style={{
@@ -78,7 +77,7 @@ const RequestLoan = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Premium")}>
             <View style={styles.list}>
               <View
                 style={{
@@ -107,11 +106,11 @@ const RequestLoan = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
     height: "10%",
     flexDirection: "row",
-    backgroundColor: "#5A01D3",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
@@ -120,16 +119,14 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   headerTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "500",
-    color: "white",
   },
   listView: {
     height: "100%",
     padding: 20,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
-    backgroundColor: "#DADADA",
   },
   depositBtn: {
     fontSize: 15,
@@ -138,7 +135,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   list: {
-    backgroundColor: "#D3B3FF",
+    backgroundColor: "#BAC1EE",
     padding: 10,
     borderRadius: 10,
     marginTop: 10,
