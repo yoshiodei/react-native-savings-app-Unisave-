@@ -1,11 +1,42 @@
 //import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { Component, useState, useEffect } from "react";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Modal, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
 // create a component
 const WalletScreen = ({navigation}) => {
+
+  const [notification, setNotification] = useState(false);
+  const [infoModal, setInfoModal] = useState(false);
+  const [interestInfo, setInterestInfo] = useState(false);
+  const [pointsInfo, setPointsInfo] = useState(false);
+  const [debtInfo, setDebtInfo] = useState(false);
+
+  const [infoModalData, setInfoModalData] = useState('');
+
+  useEffect(() => {
+    if(interestInfo){
+      let info = 'The money in your wallet will increase by this amount if you leave it as it is for a specified number of days.';
+      setInfoModalData(info);
+    }else if(debtInfo){
+      let info = 'On display is the amount of debt you are left to pay.';
+      setInfoModalData(info);
+    } else if(pointsInfo){
+      let info = 'This shows the points you have. With these points you may get discouts on items purchased, get more interest rates and request loans.';
+      setInfoModalData(info);
+    } else {
+      setInfoModalData('');
+    }
+
+    
+  }, [interestInfo,debtInfo,pointsInfo]);
+  
+  const closeInfoModal = () => {
+    setInterestInfo(false);
+    setPointsInfo(false);
+    setDebtInfo(false);
+  }
 
   const goToDeposit = () => {
     navigation.navigate("Deposit Screen");
@@ -20,12 +51,11 @@ const WalletScreen = ({navigation}) => {
       
         <View style={styles.headerView}>
             <Text style={styles.headerText}>Wallet</Text>
-            <TouchableOpacity style={styles.iconBox}>
-                     {/* <Entypo name="shopping-cart" size={24} color="#4b51bc" /> */}
-                     <MaterialCommunityIcons name="bell" size={24} color="#4b51bc" />
+            <TouchableOpacity style={styles.iconBox} onPress={()=> setNotification(true)} >
+                <MaterialCommunityIcons name="bell" size={24} color="#4b51bc" />
             </TouchableOpacity>
-            
         </View> 
+
         <View style={styles.savingsView}>
           <Text style={{ fontSize: 28, fontWeight: "700", color: "dimgray" }}>Gh¢</Text>
           <Text style={{ fontSize: 60, fontWeight: "700", textAlign: "center",color: "#7b7fd5"  }}>7,308.50</Text>
@@ -37,21 +67,21 @@ const WalletScreen = ({navigation}) => {
         </View>
         <View style={styles.infoCardView}>
           <View style={styles.cardView}>
-            <TouchableOpacity style={styles.cardInfoBtn}>
+            <TouchableOpacity style={styles.cardInfoBtn} onPress={()=> setInterestInfo(true)}>
               <Text style={styles.cardInfoText}>i</Text>
             </TouchableOpacity>
             <Text style={styles.cardViewTopText}>Estimated Interest</Text>
             <Text style={styles.cardViewBottomText}>Gh¢ 865.04</Text>
           </View>
           <View style={styles.cardView}>
-            <TouchableOpacity style={styles.cardInfoBtn}>
+            <TouchableOpacity style={styles.cardInfoBtn} onPress={()=> setDebtInfo(true)}>
               <Text style={styles.cardInfoText}>i</Text>
             </TouchableOpacity>
             <Text style={styles.cardViewTopText}>Debt To Pay</Text>
             <Text style={styles.cardViewBottomText}>You have no debts to pay</Text>
           </View>
           <View style={styles.cardView}>
-           <TouchableOpacity style={styles.cardInfoBtn}>
+           <TouchableOpacity style={styles.cardInfoBtn} onPress={()=> setPointsInfo(true)}>
               <Text style={styles.cardInfoText}>i</Text>
             </TouchableOpacity>
             <Text style={styles.cardViewTopText}>Current Points</Text>
@@ -63,6 +93,57 @@ const WalletScreen = ({navigation}) => {
             <Text style={styles.sendMoneyText}>Send Money</Text>
           </TouchableOpacity>
         </View> 
+
+        {/* ------ Modals ------ */}
+
+        <Modal
+          visible={notification}
+          transparent
+          animationType="slide" 
+        >
+          <SafeAreaView style={styles.notificationModalView}>
+            
+            <View style={styles.notificationModalHeader}>
+              <Text style={styles.headerText}>Notifications</Text>
+            </View>
+            <ScrollView style={{width: "100%", flex: 1, backgroundColor: "white"  }} >
+                <View style={styles.noNotificationView}>
+                  <Image style={styles.noNotification} source={require("./../assets/no_notification.gif")} />
+                  <Text style={{ fontSize: 20, fontWeight: "600", color: "gray" }}>Sorry, there are no notifications</Text>
+                </View>
+                
+                <TouchableOpacity style={{ height: 40, width: "40%",marginHorizontal: "30%", backgroundColor: "#4b51bc", borderRadius: 4, justifyContent: "center", alignItems: "center", marginVertical: 30 }}
+              onPress={ ()=> setNotification(false) }
+            >
+               <Text style={{fontSize: 18, fontWeight: "500", color: "white"}} >Close</Text>
+            </TouchableOpacity>
+            </ScrollView>
+          </SafeAreaView>  
+        </Modal>
+
+        <Modal
+          visible={ (interestInfo | debtInfo | pointsInfo) ? true : false }
+          transparent
+          animationType="fade" 
+        >
+            <View style={styles.infoModalView}>
+              <View style={styles.infoBox}>
+                  <View style={styles.infoModalIconView}>
+                      <Entypo name="info" size={24} color="white" />
+                  </View>
+                  <View style={styles.modalTextView}>
+                    <Text style={{fontSize: 16, textAlign: "center", fontWeight: "400", color: "#292a2a"}}>{infoModalData}</Text>
+                  </View>
+                  <TouchableOpacity style={{ height: 30, width: "100%", backgroundColor: "#4b51bc", borderRadius: 4, justifyContent: "center", alignItems: "center",  }}
+                  onPress={closeInfoModal}
+                >
+                  <Text style={{fontSize: 18, fontWeight: "500", color: "white"}} >Close</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+        </Modal>
+
     </SafeAreaView>
   );
 };
@@ -158,6 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 1,
   },
   cardInfoText: {
     fontSize: 12,
@@ -200,6 +282,71 @@ const styles = StyleSheet.create({
     right: 20,
     top: 15,
  },
+ notificationModalView: { 
+   flex:1, 
+   width: "100%", 
+   backgroundColor: "white",  
+   justifyContent: "flex-start", 
+   alignItems: "center", 
+  },
+
+  notificationModalHeader: {
+   width: "100%",
+   marginTop: 5,
+   height: 60,
+   backgroundColor: "white",  
+   justifyContent: "center",
+   alignItems: "center",
+   borderBottomColor: "darkgray",
+   borderBottomWidth: 1, 
+  },
+  infoModalView: {
+   width: "100%",
+   flex: 1,
+   backgroundColor: "#000000b3",
+   justifyContent: "center",
+   alignItems: "center",
+  },
+  infoBox: {
+    width: 300,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    paddingTop: 33,
+    borderRadius: 8,
+    backgroundColor: "white",
+    alignItems: "center",
+    position: "relative",
+  },
+  infoModalIconView: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    padding: 10,
+    paddingLeft: 13,
+    backgroundColor: "#4b51bc",
+    top: -30,
+    left: 120,
+    borderWidth: 5,
+    justifyContent: "center",
+    alignContent: "center",
+    borderColor: "white",
+    position: "absolute"
+  },
+  modalTextView: {
+    width: "100%",
+    minHeight: 20,
+    paddingBottom: 10,
+  },
+  noNotificationView:{
+    width: "100%",
+    minHeight: 30,
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  noNotification:{
+    width: "100%",
+    height: 300,
+  },
 });
 
 //make this component available to the app
