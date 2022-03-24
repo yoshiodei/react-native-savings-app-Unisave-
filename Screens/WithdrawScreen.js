@@ -17,9 +17,8 @@ const WithdrawScreen = ({ navigation }) => {
       <View style={styles.headerView}>
         <Ionicons
           onPress={() => navigation.goBack()}
-          name="arrow-back"
+          name="chevron-back"
           size={30}
-          color="white"
         />
         <Text style={styles.headerTitle}>Withdraw Money</Text>
         <View></View>
@@ -31,16 +30,13 @@ const WithdrawScreen = ({ navigation }) => {
             fontSize: 25,
             fontWeight: "600",
             marginLeft: 30,
+            marginBottom: 5,
             color: "grey",
           }}
         >
           Ghc
         </Text>
-        <TextInput
-          style={styles.amountInput}
-          keyboardType="numeric"
-          placeholder="Enter Amount"
-        />
+        <TextInput style={styles.amountInput} keyboardType="numeric" />
       </View>
 
       <View style={styles.submitBtnView}>
@@ -58,11 +54,11 @@ const WithdrawScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
     height: "10%",
     flexDirection: "row",
-    backgroundColor: "#5A01D3",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
@@ -71,15 +67,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 20,
   },
-  //   depositBtnView: {
-  //     height: "70%",
-  //     justifyContent: "flex-end",
-  //     paddingBottom: 50,
-  //   },
   headerTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "500",
-    color: "white",
   },
   amountInput: {
     fontSize: 50,
@@ -87,6 +77,8 @@ const styles = StyleSheet.create({
     color: "#5A01D3",
     textAlign: "center",
     padding: 10,
+    backgroundColor: "white",
+    borderRadius: 5,
     borderBottomColor: "#5A01D3",
     borderBottomWidth: 1,
   },
