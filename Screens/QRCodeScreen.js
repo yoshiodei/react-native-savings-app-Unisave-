@@ -11,9 +11,9 @@ const QRCodeScreen = ({ navigation }) => {
       <View style={styles.headerView}>
         <Ionicons
           onPress={() => navigation.goBack()}
-          name="arrow-back"
+          name="chevron-back"
           size={30}
-          color="white"
+          color="black"
         />
         <Text style={styles.headerTitle}>My QR Code</Text>
         <View></View>
@@ -23,7 +23,7 @@ const QRCodeScreen = ({ navigation }) => {
         <View
           style={{
             alignItems: "center",
-            backgroundColor: "#D3B3FF",
+            backgroundColor: "#BAC1EE",
             padding: 40,
             borderRadius: 10,
           }}
@@ -39,7 +39,7 @@ const QRCodeScreen = ({ navigation }) => {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#D3B3FF",
+            backgroundColor: "#BAC1EE",
             padding: 10,
             borderRadius: 10,
           }}
@@ -70,11 +70,11 @@ const QRCodeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#D1D5EE",
   },
   headerView: {
     height: "10%",
     flexDirection: "row",
-    backgroundColor: "#5A01D3",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
@@ -88,9 +88,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   headerTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "500",
-    color: "white",
   },
   profileImg: {
     height: 70,
