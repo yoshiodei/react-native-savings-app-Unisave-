@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import DepositScreen from './DepositScreen';
 import SendMoneyScreen from './SendMoneyScreen';
 import WalletScreen from "./WalletScreen";
+import Scanner from "./Scanner";
+
 
 
 const Stack = createStackNavigator();
@@ -20,6 +22,7 @@ const Walletscreennav = () => {
       <Stack.Screen name="Wallet Screen" component={WalletScreen} />
       <Stack.Screen name="Deposit Screen" component={DepositScreen} />
       <Stack.Screen name="Send Money Screen" component={SendMoneyScreen} />
+      <Stack.Screen name="Scanner Screen" component={Scanner} />
        
     </Stack.Navigator>
   );
