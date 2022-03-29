@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
+// import CircularProgress from 'react-native-circular-progress-indicator';
 
 // create a component
 const Dashboard = () => {
@@ -31,6 +32,7 @@ const Dashboard = () => {
               }}>Gh¢ 85.00</Text>
             </View>
           </View>
+          
       </View>
       <View style={styles.loantView}>
           <View style={styles.loanBox}>
@@ -147,5 +149,5 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
+// //make this component available to the app
 export default Dashboard;
