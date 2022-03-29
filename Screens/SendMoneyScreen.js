@@ -8,12 +8,15 @@ import { Entypo } from '@expo/vector-icons';
 
 
 // create a component
-const SendMoneyScreen = ({navigation, text}) => {
+const SendMoneyScreen = ({navigation, route}) => {
 
     const goBack = () => {
         navigation.goBack();
     }
 
+    let data = route.params;
+ 
+    // console.log("Value for data is:", data);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -22,7 +25,7 @@ const SendMoneyScreen = ({navigation, text}) => {
                 <TouchableOpacity style={styles.goBackBtn} onPress={goBack} >
                      <Entypo name="chevron-left" size={30} color="#4b51bc" />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>{text ? text : "Send Money"}</Text>   
+                <Text style={styles.headerText}> Send Money </Text>   
       </View>
 
       <View style={styles.sendAmountView}>
