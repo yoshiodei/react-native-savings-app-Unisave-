@@ -1,12 +1,50 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet,Image, Text, TouchableOpacity,ScrollView} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-root-toast';
+import { connect } from "react-redux";
+import { login } from '../redux/action';
 
-const Signinscreen = ({navigation}) => {
+const Signinscreen = ({navigation, state, login}) => {
+
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
+
+    const userId = (text) => {
+        setId(text);
+    }
+
+    const userPassword = (text) => {
+        setPassword(text);
+    }
 
     const signin = () => {
-        navigation.replace('Mainscreen');
+        if( !password || !id ){
+            Toast.show('Please complete form to proceed', {
+                duration: Toast.durations.SHORT,
+            })
+        } else if ( password && id ){
+            let user = state.accounts.filter(account => ((account.email.toLowerCase() === id.toLowerCase() || account.phoneNumber === id) && account.password === password.toString()));
+
+            //  console.log(user , id.toLowerCase(), password.toString());
+
+            if(user.length === 1){
+               console.log("user logged in", user); 
+               login(user);
+               navigation.replace('Mainscreen'); 
+            } else {
+                Toast.show('Please enter right credentials to proceed', {
+                    duration: Toast.durations.SHORT,
+                })
+            }
+        }  
+    }
+
+    const showToast = () => {
+        Toast.show('Toast Shown.', {
+            duration: Toast.durations.LONG,
+        })
     }
 
     return (
@@ -21,12 +59,14 @@ const Signinscreen = ({navigation}) => {
                             <Text style={styles.inputLabel}>Email / Phone Number</Text>
                             <TextInput
                                 style={styles.input}
+                                onChangeText={(text) => userId(text)}
                             />
                         </View>
                         <View style={styles.innerInputView}>
                             <Text style={styles.inputLabel}>Password</Text>
                             <TextInput
                                 style={styles.input}
+                                onChangeText={(text) => userPassword(text)}
                                 secureTextEntry
                             />
                         </View>
@@ -106,4 +146,10 @@ const styles = StyleSheet.create({
       },
 })
 
-export default Signinscreen;
+const mapStateToProps = (state) => {
+    return { state }
+}
+
+const mapDispatchToProps = { login }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signinscreen);

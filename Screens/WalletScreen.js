@@ -3,9 +3,11 @@ import React, { Component, useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Modal, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+
 
 // create a component
-const WalletScreen = ({navigation}) => {
+const WalletScreen = ({navigation, state}) => {
 
   const [notification, setNotification] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
@@ -14,6 +16,17 @@ const WalletScreen = ({navigation}) => {
   const [debtInfo, setDebtInfo] = useState(false);
 
   const [infoModalData, setInfoModalData] = useState('');
+  // let account = state.loggedInAccount[0];
+
+  const account = state.loggedInAccount[0];
+  const [firstName, last] = account.fullName.split(' ');
+
+  Number.prototype.format = function () {
+    return this.toString().split( /(?=(?:\d{3})+(?:\.|$))/g ).join( "," );
+  }; 
+
+  
+  
 
   useEffect(() => {
     if(interestInfo){
@@ -50,7 +63,7 @@ const WalletScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       
         <View style={styles.headerView}>
-            <Text style={styles.headerText}>Wallet</Text>
+            <Text style={styles.headerText}>{`Hi ${firstName}`}</Text>
             <TouchableOpacity style={styles.iconBox} onPress={()=> setNotification(true)} >
                 <MaterialCommunityIcons name="bell" size={24} color="#4b51bc" />
             </TouchableOpacity>
@@ -58,7 +71,7 @@ const WalletScreen = ({navigation}) => {
 
         <View style={styles.savingsView}>
           <Text style={{ fontSize: 28, fontWeight: "700", color: "dimgray" }}>Gh¢</Text>
-          <Text style={{ fontSize: 60, fontWeight: "700", textAlign: "center",color: "#7b7fd5"  }}>7,308.50</Text>
+          <Text style={{ fontSize: 60, fontWeight: "700", textAlign: "center",color: "#7b7fd5"  }}>{account.wallet.format()}</Text>
         </View>
         <View style={styles.depositView}>
           <TouchableOpacity style={styles.depositBtn} onPress={goToDeposit}>
@@ -78,14 +91,15 @@ const WalletScreen = ({navigation}) => {
               <Text style={styles.cardInfoText}>i</Text>
             </TouchableOpacity>
             <Text style={styles.cardViewTopText}>Debt To Pay</Text>
-            <Text style={styles.cardViewBottomText}>You have no debts to pay</Text>
+            { account.debt === 0 && <Text style={styles.cardViewBottomText}>You have no debts to pay</Text>}
+            { account.debt !== 0 && <Text style={styles.cardViewBottomText}>{`Gh¢ ${account.debt.format()}`}</Text>}
           </View>
           <View style={styles.cardView}>
            <TouchableOpacity style={styles.cardInfoBtn} onPress={()=> setPointsInfo(true)}>
               <Text style={styles.cardInfoText}>i</Text>
             </TouchableOpacity>
             <Text style={styles.cardViewTopText}>Current Points</Text>
-            <Text style={styles.cardViewBottomText}>50 points</Text>
+            <Text style={styles.cardViewBottomText}>{`${account.points} points`}</Text>
           </View>
         </View> 
         <View style={{width: "100%", paddingHorizontal: 20}}>
@@ -107,10 +121,10 @@ const WalletScreen = ({navigation}) => {
               <Text style={styles.headerText}>Notifications</Text>
             </View>
             <ScrollView style={{width: "100%", flex: 1, backgroundColor: "white"  }} >
-                <View style={styles.noNotificationView}>
+                { account.notification.length === 0 && <View style={styles.noNotificationView}>
                   <Image style={styles.noNotification} source={require("./../assets/no_notification.gif")} />
                   <Text style={{ fontSize: 20, fontWeight: "600", color: "gray" }}>Sorry, there are no notifications</Text>
-                </View>
+                </View>}
                 
                 <TouchableOpacity style={{ height: 40, width: "40%",marginHorizontal: "30%", backgroundColor: "#4b51bc", borderRadius: 4, justifyContent: "center", alignItems: "center", marginVertical: 30 }}
               onPress={ ()=> setNotification(false) }
@@ -349,5 +363,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = (state) =>{
+  return{
+      state
+  }
+}
+
+// const mapDispatchToProps = { nextPage, prevPage, setPage, updateState, updateOrder }
+
 //make this component available to the app
-export default WalletScreen;
+export default connect(mapStateToProps)(WalletScreen);
