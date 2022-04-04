@@ -36,7 +36,10 @@ const StandardLoan = ({ navigation }) => {
         >
           Ghc
         </Text>
-        <TextInput style={styles.amountInput} keyboardType="numeric" />
+        <TextInput
+          style={styles.amountInput}
+          keyboardType="numbers-and-punctuation"
+        />
       </View>
 
       <View style={styles.submitBtnView}>
