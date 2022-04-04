@@ -1,11 +1,14 @@
 //import liraries
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 // import CircularProgress from 'react-native-circular-progress-indicator';
 
 // create a component
 const Dashboard = () => {
+
+  // const [value, setValue] = useState(0);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -13,7 +16,15 @@ const Dashboard = () => {
       </View> 
       <View style={styles.interestView}>
           <View style={styles.interestBox}>
-            
+            {/* <CircularProgress 
+              radius={90}
+              value={85}
+              textColor='#222'
+              fontSize={20}
+              valueSuffix={'%'}
+              inActiveStrokeColor={'#2ecc71'}
+              inActiveStrokeOpacity={0.2}
+            /> */}
             <View style={styles.interestInnerBox}>
                 <SimpleLineIcons name="wallet" size={60} color="black" />
                 <Text style={{

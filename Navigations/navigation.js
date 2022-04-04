@@ -16,7 +16,7 @@ import PremiumLoan from "../Screens/PremiumLoan";
 
 const Stack = createStackNavigator();
 
-function StackNav() {
+function StackNav({route}) {
   return (
     <Stack.Navigator
       screenOptions={{
