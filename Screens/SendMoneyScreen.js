@@ -1,15 +1,19 @@
 //import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import React, { Component, useState, useEffect  } from "react";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, Button } from "react-native";
+// import { ScrollView } from "react-native-gesture-handler";
+// import React, { useState, useEffect } from 'react';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Entypo } from '@expo/vector-icons';
 
+
 // create a component
-const SendMoneyScreen = ({navigation}) => {
+const SendMoneyScreen = ({navigation, text}) => {
 
     const goBack = () => {
         navigation.goBack();
     }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -18,7 +22,7 @@ const SendMoneyScreen = ({navigation}) => {
                 <TouchableOpacity style={styles.goBackBtn} onPress={goBack} >
                      <Entypo name="chevron-left" size={30} color="#4b51bc" />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Send Money</Text>   
+                <Text style={styles.headerText}>{text ? text : "Send Money"}</Text>   
       </View>
 
       <View style={styles.sendAmountView}>
@@ -28,9 +32,10 @@ const SendMoneyScreen = ({navigation}) => {
           <Text style={{ fontSize: 16, fontWeight: "500", color: "dimgray", marginBottom: 5, }}>Recipient Code / Phone Number</Text>
           <TextInput style={ styles.codeInput } />
 
-          <TouchableOpacity style={styles.scanBtn} >
+          <TouchableOpacity style={styles.scanBtn} onPress={()=> navigation.navigate("Scanner Screen") }>
             <Text style={styles.scanBtnText}>Scan Recipient QR Code</Text>
           </TouchableOpacity>
+
       </View>
 
       <View style={{width: "100%", paddingHorizontal: 20, flex: 1, justifyContent: "flex-end", }}>
@@ -125,6 +130,12 @@ scanBtnText: {
     fontSize: 18,
     color: "white",
     fontWeight: "600",
+},
+containerNew: {
+  width: "100%",
+  height: 80,
+  flexDirection: 'column',
+  justifyContent: 'center',
 },
 });
 
