@@ -11,18 +11,18 @@ import StackNav from '../Navigations/navigation';
 const Stack = createStackNavigator();
 
 // create a component
-const HomeScreen = ({accounts}) => {
+const HomeScreen = () => {
 
   return (
     <NavigationContainer>
         <Stack.Navigator screenOptions={{ gestureEnabled: false, headerBackTitleVisible: false, header: () => null }}>
             <Stack.Screen name="Signinscreen">
-                {(props) => <Signinscreen  accounts={accounts} navigation={props.navigation} />}
+                {(props) => <Signinscreen  navigation={props.navigation} />}
             </Stack.Screen> 
             {/* <Stack.Screen name="Signinscreen" component={Signinscreen}  /> */}
             
             <Stack.Screen name="Signupscreen">
-                {(props) => <Signupscreen  accounts={accounts} navigation={props.navigation} />}
+                {(props) => <Signupscreen navigation={props.navigation} />}
             </Stack.Screen>
             {/* <Stack.Screen name="Signupscreen" component={Signupscreen} /> */}
             
