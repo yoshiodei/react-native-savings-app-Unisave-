@@ -61,6 +61,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type){
         case "LOGIN": return { ...state , loggedInAccount:[...action.payload] } 
+        case "DEPOSIT": return { ...state, loggedInAccount:[action.payload] }
         default: return state;
     }
 } 

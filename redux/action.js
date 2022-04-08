@@ -4,3 +4,10 @@ export const login = (account) => {
         payload: account
     }
 }
+
+export const deposit = (balance) => {
+    return {
+        type: "DEPOSIT",
+        payload: balance
+    }
+}
