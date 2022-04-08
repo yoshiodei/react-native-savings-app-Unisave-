@@ -5,7 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
-
+ 
 // create a component
 const WalletScreen = ({navigation, state}) => {
 
@@ -19,7 +19,7 @@ const WalletScreen = ({navigation, state}) => {
   // let account = state.loggedInAccount[0];
 
   const account = state.loggedInAccount[0];
-  const [firstName, last] = account.fullName.split(' ');
+  const [firstName] = account.fullName.split(' ');
 
   Number.prototype.format = function () {
     return this.toString().split( /(?=(?:\d{3})+(?:\.|$))/g ).join( "," );
@@ -50,7 +50,7 @@ const WalletScreen = ({navigation, state}) => {
     setPointsInfo(false);
     setDebtInfo(false);
   }
-
+ 
   const goToDeposit = () => {
     navigation.navigate("Deposit Screen");
   }
@@ -58,6 +58,8 @@ const WalletScreen = ({navigation, state}) => {
   const goToSendMoney = () => {
     navigation.navigate("Send Money Screen");
   } 
+
+  let wallet = parseFloat(account.wallet.toFixed(2)); 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,7 +73,7 @@ const WalletScreen = ({navigation, state}) => {
 
         <View style={styles.savingsView}>
           <Text style={{ fontSize: 28, fontWeight: "700", color: "dimgray" }}>Gh¢</Text>
-          <Text style={{ fontSize: 60, fontWeight: "700", textAlign: "center",color: "#7b7fd5"  }}>{account.wallet.format()}</Text>
+          <Text style={{ fontSize: 60, fontWeight: "700", textAlign: "center",color: "#7b7fd5"  }}>{wallet.format()}</Text>
         </View>
         <View style={styles.depositView}>
           <TouchableOpacity style={styles.depositBtn} onPress={goToDeposit}>
@@ -136,7 +138,7 @@ const WalletScreen = ({navigation, state}) => {
         </Modal>
 
         <Modal
-          visible={ (interestInfo | debtInfo | pointsInfo) ? true : false }
+          visible={ (interestInfo || debtInfo || pointsInfo) ? true : false }
           transparent
           animationType="fade" 
         >

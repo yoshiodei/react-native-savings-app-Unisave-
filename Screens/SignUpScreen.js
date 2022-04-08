@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-root-toast';
  
 
-const Signupscreen = ({navigation, accounts}) => {
+const Signupscreen = ({navigation}) => {
 
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
@@ -33,40 +33,40 @@ const Signupscreen = ({navigation, accounts}) => {
     //    console.log(data);
     }  
 
-    const signup = () => {
-        if( !data.password || !data.phoneNumber || !data.email || !data.studentID || !data.password || !data.fullName ||!passwordConfirmation ){
-            Toast.show('Please complete form to proceed', { duration: Toast.durations.SHORT,});
-        } else{
-            let match = accounts.filter(account => account.email.toLowerCase() === data.email.toLowerCase())
-            if(match.length === 1){
-                 Toast.show('Email entered already exists', { duration: Toast.durations.SHORT,});
-            }else {
-                let match = accounts.filter(account => account.phoneNumber === data.phoneNumber );
-                if(match.length === 1){
-                    Toast.show('Phone number entered already exists', { duration: Toast.durations.SHORT,});
-               }else{
-                let match = accounts.filter(account => account.studentID === data.studentID );   
-                if(match.length === 1){
-                    Toast.show('Student ID entered already exists', { duration: Toast.durations.SHORT,});
-               }else{
-                    if( data.password.length < 8 ){
-                        Toast.show('Password entered is too short', { duration: Toast.durations.SHORT,});
-                    }
-                    else if( data.password !== passwordConfirmation ){
-                        Toast.show('Passwords words provided does not match', { duration: Toast.durations.SHORT,});
-                    }else{
-                         let code = Math.random().toString();
-                         let newAccounts = {...accounts, data};
-                         setData({...data, QRCode: code  });
-                         navigation.replace('Mainscreen', {data, newAccounts});
-                    }
+    // const signup = () => {
+    //     if( !data.password || !data.phoneNumber || !data.email || !data.studentID || !data.password || !data.fullName ||!passwordConfirmation ){
+    //         Toast.show('Please complete form to proceed', { duration: Toast.durations.SHORT,});
+    //     } else{
+    //         let match = accounts.filter(account => account.email.toLowerCase() === data.email.toLowerCase())
+    //         if(match.length === 1){
+    //              Toast.show('Email entered already exists', { duration: Toast.durations.SHORT,});
+    //         }else {
+    //             let match = accounts.filter(account => account.phoneNumber === data.phoneNumber );
+    //             if(match.length === 1){
+    //                 Toast.show('Phone number entered already exists', { duration: Toast.durations.SHORT,});
+    //            }else{
+    //             let match = accounts.filter(account => account.studentID === data.studentID );   
+    //             if(match.length === 1){
+    //                 Toast.show('Student ID entered already exists', { duration: Toast.durations.SHORT,});
+    //            }else{
+    //                 if( data.password.length < 8 ){
+    //                     Toast.show('Password entered is too short', { duration: Toast.durations.SHORT,});
+    //                 }
+    //                 else if( data.password !== passwordConfirmation ){
+    //                     Toast.show('Passwords words provided does not match', { duration: Toast.durations.SHORT,});
+    //                 }else{
+    //                      let code = Math.random().toString();
+    //                      let newAccounts = {...accounts, data};
+    //                      setData({...data, QRCode: code  });
+    //                      navigation.replace('Mainscreen', {data, newAccounts});
+    //                 }
  
-                }  
-               }
-            }
-        }
+    //             }  
+    //            }
+    //         }
+    //     }
         
-    }  
+    // }  
 
 
     return (
