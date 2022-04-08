@@ -3,20 +3,70 @@ import React, { Component, useState, useEffect  } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, Button } from "react-native";
 // import { ScrollView } from "react-native-gesture-handler";
 // import React, { useState, useEffect } from 'react';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { connect } from 'react-redux';
+import Toast from 'react-native-root-toast';
 import { Entypo } from '@expo/vector-icons';
 
 
 // create a component
-const SendMoneyScreen = ({navigation, route}) => {
+const SendMoneyScreen = ({navigation, route, state}) => {
 
     const goBack = () => {
-        navigation.goBack();
+        navigation.goBack(); 
     }
 
+    let account = state.loggedInAccount[0];
+    let wallet = account.wallet;
+
+
+    const [moneySent,setMoneySent] = useState('');
+    const [recipientData,setRecipientData] = useState('');
+
     let data = route.params;
- 
-    // console.log("Value for data is:", data);
+    useEffect(()=>{
+        data ? setRecipientData(data) : setRecipientData('')
+    },[data])
+    
+    const sendMoney = () => {
+       if(!recipientData || !moneySent){
+          Toast.show('Please provide inputs', {
+            duration: Toast.durations.SHORT,
+          });
+          setMoneySent('');
+          setRecipientData('');
+       }else if(!Number(moneySent)){
+          Toast.show('Please enter a number in this field', {
+            duration: Toast.durations.SHORT,
+          });
+          setMoneySent('');
+       }else if(moneySent > wallet){
+          Toast.show('Money sent cannot exceed amount in wallet', {
+          duration: Toast.durations.SHORT,
+          });
+          setMoneySent('');
+       }else if(recipientData === account.phoneNumber || recipientData === account.QRCode){
+          Toast.show('Incorrect recipient data entered', {
+          duration: Toast.durations.SHORT,
+          });
+          setRecipientData('');
+       }else{
+         let found = state.accounts.some(account => (account.phoneNumber === recipientData || account.QRCode === recipientData));
+         if(found){
+          Toast.show('Money sent successfully', {
+            duration: Toast.durations.SHORT,
+          });
+          setMoneySent('');
+          setRecipientData('');
+
+          
+         }else{
+          Toast.show('Incorrect recipient data entered', {
+            duration: Toast.durations.SHORT,
+          });
+          setRecipientData('');
+         }
+       }
+    }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,10 +80,16 @@ const SendMoneyScreen = ({navigation, route}) => {
 
       <View style={styles.sendAmountView}>
           <Text style={{ fontSize: 28, fontWeight: "700", color: "dimgray" }}>Gh¢</Text>
-          <TextInput style={ styles.sendInput } keyboardType="numbers-and-punctuation" />
+          <TextInput
+            value={moneySent}
+            onChangeText={(amount)=> setMoneySent(amount)}
+            style={ styles.sendInput } keyboardType="numbers-and-punctuation" />
           
           <Text style={{ fontSize: 16, fontWeight: "500", color: "dimgray", marginBottom: 5, }}>Recipient Code / Phone Number</Text>
-          <TextInput style={ styles.codeInput } />
+          <TextInput style={ styles.codeInput }
+             value={recipientData}
+             onChangeText={(text)=> setRecipientData(text)}
+          />
 
           <TouchableOpacity style={styles.scanBtn} onPress={()=> navigation.navigate("Scanner Screen") }>
             <Text style={styles.scanBtnText}>Scan Recipient QR Code</Text>
@@ -42,7 +98,7 @@ const SendMoneyScreen = ({navigation, route}) => {
       </View>
 
       <View style={{width: "100%", paddingHorizontal: 20, flex: 1, justifyContent: "flex-end", }}>
-          <TouchableOpacity style={styles.sendBtn} >
+          <TouchableOpacity style={styles.sendBtn} onPress={sendMoney} >
             <Text style={styles.sendText}>Send</Text>
           </TouchableOpacity>
       </View> 
@@ -142,5 +198,9 @@ containerNew: {
 },
 });
 
+const mapStateToProps = (state) => {
+  return { state }
+} 
+
 //make this component available to the app
-export default SendMoneyScreen;
+export default connect(mapStateToProps)(SendMoneyScreen);

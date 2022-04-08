@@ -1,15 +1,63 @@
 //import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { Component, useState } from "react";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from "react-native";
 import { ScrollView, TextInput,  } from "react-native-gesture-handler";
 import { Entypo } from '@expo/vector-icons';
+import Toast from 'react-native-root-toast';
+import { connect } from "react-redux";
+import { deposit } from "../redux/action";
 
 // create a component
-const DepositScreen = ({navigation}) => {
+const DepositScreen = ({navigation, account, deposit}) => {
 
-    const goBack = () => {
-        navigation.goBack();
-    }
+  const [depositAmount, setDepositAmount] = useState('');
+
+  const goBack = () => {
+      navigation.goBack();
+  }
+
+  const depositMoney = () =>{
+    console.log(account); 
+    let amount = account.wallet - Number(depositAmount);
+    let newBalance = {...account, wallet: amount};
+    deposit(newBalance);
+    Toast.show('Money deposited successfully', {
+      duration: Toast.durations.SHORT,
+     });
+     setDepositAmount('');
+  }
+
+  const cancelDeposit = () =>{
+    Toast.show('Deposit cancelled', {
+      duration: Toast.durations.SHORT,
+     });
+     setDepositAmount('');
+  }
+
+  const makeDeposit = () => {
+        if(!Number(depositAmount) || Number(depositAmount) < 1 ){
+            Toast.show('Amount entered is below Gh¢ 1.00', {
+             duration: Toast.durations.SHORT,
+            });
+            setDepositAmount('');
+        }else if(Number(depositAmount) > account.wallet){
+            Toast.show('Amount entered exceeds amount in wallet', {
+            duration: Toast.durations.SHORT, });
+            setDepositAmount('');
+        }else {
+            Alert.alert("Deposit",`Make deposit of Gh¢ ${depositAmount} to ${account.phoneNumber}?`, [
+            {
+              text: "Cancel",
+              onPress: cancelDeposit,
+              style: "cancel",
+            },
+            {
+              text: "OK",
+              onPress: depositMoney,
+            },
+          ]);
+        }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,11 +71,15 @@ const DepositScreen = ({navigation}) => {
       
       <View style={styles.depositAmountView}>
           <Text style={{ fontSize: 28, fontWeight: "700", color: "dimgray" }}>Gh¢</Text>
-          <TextInput style={ styles.depositInput } keyboardType="numbers-and-punctuation" />
+          <TextInput style={ styles.depositInput } 
+             keyboardType="numbers-and-punctuation" 
+             onChangeText={(amount)=> setDepositAmount(amount)} 
+             value={depositAmount}
+          />
       </View>
 
       <View style={{width: "100%", paddingHorizontal: 20, flex: 1, justifyContent: "flex-end", }}>
-          <TouchableOpacity style={styles.depositBtn} >
+          <TouchableOpacity style={styles.depositBtn} onPress={makeDeposit}>
             <Text style={styles.depositText}>Deposit</Text>
           </TouchableOpacity>
       </View> 
@@ -99,5 +151,12 @@ depositText: {
   },
 });
 
+
+const mapStateToProps = (state) => {
+   return { account: state.loggedInAccount[0] }
+}
+
+const mapDispatchToProps = { deposit }
+
 //make this component available to the app
-export default DepositScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(DepositScreen);
