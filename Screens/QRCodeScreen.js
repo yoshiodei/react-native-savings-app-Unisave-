@@ -3,9 +3,12 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { QRCode } from "react-native-custom-qr-codes-expo";
-
+import {v4 as uuid} from 'uuid';
+import 'react-native-get-random-values';
+import { connect } from "react-redux";
+ 
 // create a component
-const QRCodeScreen = ({ navigation }) => {
+const QRCodeScreen = ({ navigation, account }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -26,12 +29,22 @@ const QRCodeScreen = ({ navigation }) => {
             backgroundColor: "#BAC1EE",
             padding: 40,
             borderRadius: 10,
-          }}
+          }} 
         >
           <Text style={{ fontSize: 15, marginBottom: 10 }}>
             Scan code to transfer money
           </Text>
-          <QRCode content="mqAgshsn2y3yi2mshbn" />
+          <View 
+              style={{
+                alignItems: "center",
+                backgroundColor: "white",
+                padding:8,
+                borderRadius: 7,
+              }}
+          >
+            <QRCode content={account.QRCode} />
+          </View>
+          
         </View>
       </View>
 
@@ -57,7 +70,7 @@ const QRCodeScreen = ({ navigation }) => {
               Transaction Code
             </Text>
             <Text style={{ fontSize: 16, color: "#616161" }}>
-              mqAgshsn2y3yi2mshbn
+              {account.QRCode}
             </Text>
           </View>
         </View>
@@ -99,5 +112,9 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = (state) => {
+  return {account: state.loggedInAccount[0]}
+}
+
 //make this component available to the app
-export default QRCodeScreen;
+export default connect(mapStateToProps)(QRCodeScreen);

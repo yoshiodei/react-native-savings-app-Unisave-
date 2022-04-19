@@ -6,14 +6,14 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, Butt
 import { connect } from 'react-redux';
 import Toast from 'react-native-root-toast';
 import { Entypo } from '@expo/vector-icons';
-
+  
 
 // create a component
 const SendMoneyScreen = ({navigation, route, state}) => {
 
     const goBack = () => {
         navigation.goBack(); 
-    }
+    } 
 
     let account = state.loggedInAccount[0];
     let wallet = account.wallet;
@@ -51,6 +51,15 @@ const SendMoneyScreen = ({navigation, route, state}) => {
           setRecipientData('');
        }else{
          let found = state.accounts.some(account => (account.phoneNumber === recipientData || account.QRCode === recipientData));
+         let amount = account.wallet - Number(moneySent);
+          // let report = { 
+          //   message: `You sent Gh¢ ${(Number(moneySent)).toFixed(2)} to ${found[0].fullName}`,
+          //   date: `${new Date().toLocaleString('default', {weekday: "long"})}, ${new Date().toLocaleString('default', {month: "long"})} ${new Date().getDate()}, ${new Date().getFullYear()} - ${new Date().toLocaleString().split(" ")[1].slice(0,-3)}`,
+          //   key: Math.random().toString(),
+          //   time: new Date().getTime().toString(),
+          // };
+         let newBalance = {...account, wallet: amount  };
+         deposit(newBalance);
          if(found){
           Toast.show('Money sent successfully', {
             duration: Toast.durations.SHORT,
@@ -58,7 +67,7 @@ const SendMoneyScreen = ({navigation, route, state}) => {
           setMoneySent('');
           setRecipientData('');
 
-          
+
          }else{
           Toast.show('Incorrect recipient data entered', {
             duration: Toast.durations.SHORT,
@@ -67,6 +76,9 @@ const SendMoneyScreen = ({navigation, route, state}) => {
          }
        }
     }
+
+
+  // You edited here ^^^^^^^^^^
 
   return (
     <SafeAreaView style={styles.container}>

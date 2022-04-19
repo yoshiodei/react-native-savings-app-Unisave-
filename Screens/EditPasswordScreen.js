@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,48 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { connect } from "react-redux";
+import Toast from 'react-native-root-toast';
+import { resetPassword } from "../redux/action";
+  
 // create a component
-const EditPasswordScreen = ({ navigation }) => {
+const EditPasswordScreen = ({ navigation, account, resetPassword }) => {
+ 
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+
+  const passwordReset = () => {
+       if( !newPassword || !confirmPassword || !oldPassword ){
+        Toast.show('Please fill fields completely', {
+          duration: Toast.durations.SHORT,
+         }); 
+       }else if(newPassword.lenght < 8){
+          Toast.show('Password is too short', {
+          duration: Toast.durations.SHORT,
+         });
+         setNewPassword('');
+         setConfirmPassword('');
+       }
+        else if( oldPassword !== account.password){
+         Toast.show('Old password did not match', {
+          duration: Toast.durations.SHORT,
+         });
+         setOldPassword('');
+       }else if( confirmPassword !== newPassword){
+         Toast.show('New passwords do not match', {
+          duration: Toast.durations.SHORT,
+         });
+         setNewPassword('');
+         setConfirmPassword('');
+       }else{
+         Toast.show('Password set successfully', {
+          duration: Toast.durations.SHORT,
+         });
+         resetPassword({...account, password: newPassword })
+       }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -20,7 +59,7 @@ const EditPasswordScreen = ({ navigation }) => {
           name="chevron-back"
           size={30}
         />
-        <Text style={styles.headerTitle}>Reset Password</Text>
+        <Text style={styles.headerTitle}>Reset Password </Text>
         <View></View>
       </View>
 
@@ -32,6 +71,8 @@ const EditPasswordScreen = ({ navigation }) => {
             autoCapitalize="none"
             secureTextEntry={true}
             autoCorrect={false}
+            value={oldPassword}
+            onChangeText={(text)=>setOldPassword(text)}
           />
         </View>
         <View style={styles.password}>
@@ -41,6 +82,8 @@ const EditPasswordScreen = ({ navigation }) => {
             autoCapitalize="none"
             secureTextEntry={true}
             autoCorrect={false}
+            value={newPassword}
+            onChangeText={(text)=>setNewPassword(text)}
           />
         </View>
         <View style={styles.password}>
@@ -50,12 +93,14 @@ const EditPasswordScreen = ({ navigation }) => {
             autoCapitalize="none"
             secureTextEntry={true}
             autoCorrect={false}
+            value={confirmPassword}
+            onChangeText={(text)=>setConfirmPassword(text)}
           />
         </View>
       </View>
 
       <View style={styles.resetBtnView}>
-        <TouchableOpacity style={styles.resetBtn}>
+        <TouchableOpacity style={styles.resetBtn} onPress={passwordReset}>
           <Text style={{ fontSize: 25, fontWeight: "600", color: "white" }}>
             Reset Password
           </Text>
@@ -116,5 +161,11 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = (state) => {
+  return { account: state.loggedInAccount[0] }
+}
+
+const mapDispatchToProps = { resetPassword }
+
 //make this component available to the app
-export default EditPasswordScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(EditPasswordScreen);

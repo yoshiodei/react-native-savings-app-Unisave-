@@ -15,17 +15,25 @@ const DepositScreen = ({navigation, account, deposit}) => {
   const goBack = () => {
       navigation.goBack();
   }
-
+ 
   const depositMoney = () =>{
-    console.log(account); 
-    let amount = account.wallet - Number(depositAmount);
-    let newBalance = {...account, wallet: amount};
+    // console.log(account); 
+    let amount = account.wallet + Number(depositAmount);
+    // let report = { 
+    //   message: `You have deposited Gh¢ ${(Number(depositAmount)).toFixed(2)} to your account`,
+    //   date: `${new Date().toLocaleString('default', {weekday: "long"})}, ${new Date().toLocaleString('default', {month: "long"})} ${new Date().getDate()}, ${new Date().getFullYear()} - ${new Date().toLocaleString().split(" ")[1].slice(0,-3)}`,
+    //   key: Math.random().toString(),
+    //   time: new Date().getTime().toString(),
+    // };
+    let newBalance = {...account, wallet: amount,   };
     deposit(newBalance);
     Toast.show('Money deposited successfully', {
       duration: Toast.durations.SHORT,
      });
      setDepositAmount('');
   }
+
+  // you edited here ^^^^^^^^
 
   const cancelDeposit = () =>{
     Toast.show('Deposit cancelled', {
@@ -40,12 +48,8 @@ const DepositScreen = ({navigation, account, deposit}) => {
              duration: Toast.durations.SHORT,
             });
             setDepositAmount('');
-        }else if(Number(depositAmount) > account.wallet){
-            Toast.show('Amount entered exceeds amount in wallet', {
-            duration: Toast.durations.SHORT, });
-            setDepositAmount('');
         }else {
-            Alert.alert("Deposit",`Make deposit of Gh¢ ${depositAmount} to ${account.phoneNumber}?`, [
+            Alert.alert("Deposit",`Make deposit of Gh¢ ${depositAmount} from ${account.phoneNumber}?`, [
             {
               text: "Cancel",
               onPress: cancelDeposit,

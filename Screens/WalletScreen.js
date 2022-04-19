@@ -5,6 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
+
  
 // create a component
 const WalletScreen = ({navigation, state}) => {
@@ -78,7 +79,7 @@ const WalletScreen = ({navigation, state}) => {
         <View style={styles.depositView}>
           <TouchableOpacity style={styles.depositBtn} onPress={goToDeposit}>
             <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }} >+ Deposit</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> 
         </View>
         <View style={styles.infoCardView}>
           <View style={styles.cardView}>

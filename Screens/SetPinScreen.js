@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from "react";
+import React, { Component, useState} from "react";
 import {
   View,
   Text,
@@ -10,9 +10,28 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 import { TextInput } from "react-native-gesture-handler";
+import Toast from 'react-native-root-toast';
+import { connect } from "react-redux";
+import { resetPin } from "./../redux/action";
 
 // create a component
-const SetPinScreen = ({ navigation }) => {
+const SetPinScreen = ({ navigation, account, resetPin }) => {
+
+  const [newPin, setNewPin] = useState('');
+
+  const setPin = () => {
+      if(newPin.length !== 4 || !Number(newPin)){
+        Toast.show('PIN must be 4 digits!', {
+          duration: Toast.durations.LONG,
+         });
+      }else{
+        let newlySetPIN = {...account, PIN: newPin};
+        resetPin(newlySetPIN);
+        Toast.show('PIN has been set successfully', {
+        duration: Toast.durations.LONG,
+      });
+  }}
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -36,13 +55,20 @@ const SetPinScreen = ({ navigation }) => {
           </Text>
         </View>
 
-        <View style={{ alignItems: "center", paddingTop: 20 }}>
+        <View style={{ alignItems: "center", paddingTop: 20,position: "relative", }}>
           <TextInput
             style={styles.setPinInput}
             secureTextEntry={true}
+            value={newPin}
+            onChangeText={ (text)=> setNewPin(text) }
             maxLength={4}
-            keyboardType="numeric"
+            // keyboardType="numeric"
+            caretHidden={true}
           />
+          <View style={[styles.pinInputView, {left: 76}]}></View>
+          <View style={[styles.pinInputView, {left: 121}]}></View>
+          <View style={[styles.pinInputView, {left: 167}]}></View>
+          <View style={[styles.pinInputView, {left: 212}]}></View>
           {/* <SmoothPinCodeInput
             // mask="*"
             //placeholder="•"
@@ -75,7 +101,7 @@ const SetPinScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.pinBtnView}>
-        <TouchableOpacity style={styles.pinBtn}>
+        <TouchableOpacity style={styles.pinBtn} onPress={setPin}>
           <Text style={{ fontSize: 25, fontWeight: "600", color: "white" }}>
             Set Pin
           </Text>
@@ -108,11 +134,12 @@ const styles = StyleSheet.create({
   setPinInput: {
     fontSize: 25,
     padding: 10,
-    letterSpacing: 20,
-    textAlign: "center",
-    backgroundColor: "white",
+    letterSpacing: 30,
+    marginLeft: 20,
+    textAlign: "left",
+    backgroundColor: "transparent",
     borderColor: "#5A01D3",
-    borderWidth: 1,
+    // borderWidth: 1,
     width: "60%",
     borderRadius: 5,
   },
@@ -125,7 +152,25 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginTop: 25,
   },
+  pinInputView: {
+    height: "90%", 
+    width: 35, 
+    borderRadius: 5, 
+    backgroundColor: "white", 
+    position:"absolute", 
+    top: 23,  
+    zIndex: -1,
+    borderWidth: 1,
+    borderColor: "dimgray",
+  }
+  
 });
 
+const mapStateToProps = (state) => {
+  return { account: state.loggedInAccount[0] }
+}
+
+const mapDispatchToProps = { resetPin }
+
 //make this component available to the app
-export default SetPinScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(SetPinScreen);

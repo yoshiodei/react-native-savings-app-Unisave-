@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   View,
   Text,
@@ -7,11 +7,71 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import { withdraw } from "../redux/action";
+import Toast from 'react-native-root-toast';
+ 
 
 // create a component
-const WithdrawScreen = ({ navigation }) => {
+const WithdrawScreen = ({ navigation, account, withdraw }) => { 
+
+  const [withdrawalAmount, setWithdrawalAmount] = useState('');
+
+    const withdrawMoney = () =>{
+      // console.log(account); 
+      let amount = account.wallet - Number(withdrawalAmount);
+      // let report = { 
+      //   message: `You have withdrawn Gh¢ ${(Number(withdrawalAmount)).toFixed(2)} from your account`,
+      //   date: `${new Date().toLocaleString('default', {weekday: "long"})}, ${new Date().toLocaleString('default', {month: "long"})} ${new Date().getDate()}, ${new Date().getFullYear()} - ${new Date().toLocaleString().split(" ")[1].slice(0,-3)}`,
+      //   key: Math.random().toString(),
+      //   time: new Date().getTime().toString(),
+      // };
+      let newBalance = {...account, wallet: amount };
+      withdraw(newBalance);
+      // console.log("new balance:",newBalance);
+      Toast.show('Money withdrawn successfully', {
+        duration: Toast.durations.SHORT,
+       });
+       setWithdrawalAmount('');
+    }
+
+    // You edited here  ^^^^^^^^
+  
+    const cancelWithdrawal = () =>{
+      Toast.show('Withdrawal cancelled', {
+        duration: Toast.durations.SHORT,
+       });
+       setWithdrawalAmount('');
+    }
+  
+    const allowWithdrawal = () => {
+          if(!Number(withdrawalAmount) || Number(withdrawalAmount) < 1 ){
+              Toast.show('Amount entered is below Gh¢ 1.00', {
+               duration: Toast.durations.SHORT,
+              });
+              setWithdrawalAmount('');
+          }else if(Number(withdrawalAmount) > account.wallet){
+              Toast.show('Amount entered exceeds amount in wallet', {
+              duration: Toast.durations.SHORT, });
+              setWithdrawalAmount('');
+          }else {
+              Alert.alert("Withdraw",`Make withdrawal of Gh¢ ${withdrawalAmount} to ${account.phoneNumber}?`, [
+              {
+                text: "Cancel",
+                onPress: cancelWithdrawal,
+                style: "cancel",
+              },
+              {
+                text: "OK",
+                onPress: withdrawMoney,
+              },
+            ]);
+          }
+    }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -39,11 +99,13 @@ const WithdrawScreen = ({ navigation }) => {
         <TextInput
           style={styles.amountInput}
           keyboardType="numbers-and-punctuation"
+          value={withdrawalAmount}
+          onChangeText={(text)=> setWithdrawalAmount(text)}
         />
       </View>
 
       <View style={styles.submitBtnView}>
-        <TouchableOpacity style={styles.submitBtn}>
+        <TouchableOpacity style={styles.submitBtn} onPress={allowWithdrawal} >
           <Text style={{ fontSize: 25, fontWeight: "600", color: "white" }}>
             Withdraw
           </Text>
@@ -96,5 +158,11 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = (state) => {
+  return { account: state.loggedInAccount[0] }
+} 
+
+const mapDispatchToProps = { withdraw }
+
 //make this component available to the app
-export default WithdrawScreen;
+export default connect(mapStateToProps,mapDispatchToProps)(WithdrawScreen);

@@ -1,6 +1,7 @@
 import { SafeAreaView, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList  } from "react-native";
 import React, {useState} from "react";
 import { Entypo, FontAwesome } from '@expo/vector-icons';
+import CartModal from "./CartModal";
 
 
 const ShopList = ({navigation}) => {
@@ -143,6 +144,7 @@ const ShopList = ({navigation}) => {
     }
 
     let [search, setSearch] = useState("");
+    const [cart, setCart] = useState(false);
 
     const filteredData = data.filter( item => item.name.toLowerCase().includes(search.toLowerCase()) );
 
@@ -151,8 +153,8 @@ const ShopList = ({navigation}) => {
 
         <View style={styles.headerView}>
           <Text style={styles.headerText}>Uni Shop</Text>
-          <TouchableOpacity style={styles.iconBox}>
-                     <View style={styles.dotView}></View>
+          <TouchableOpacity style={styles.iconBox} onPress={() => setCart(true)}>
+                     {/* <View style={styles.dotView}></View> */}
                      <Entypo name="shopping-cart" size={24} color="#4b51bc" />
           </TouchableOpacity>
         </View>  
@@ -190,6 +192,11 @@ const ShopList = ({navigation}) => {
          
           
         </View>
+
+            {/* ------ Modal ------ */}
+
+            <CartModal cart={cart} setCart={setCart} />
+
       </SafeAreaView>
     );
   };

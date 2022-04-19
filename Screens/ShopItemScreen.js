@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import { Entypo } from '@expo/vector-icons';
-
+import Toast from 'react-native-root-toast';
 import {View, StyleSheet, SafeAreaView, Text, ScrollView, TouchableOpacity} from 'react-native';
+import { connect } from 'react-redux';
+import { addToCart } from '../redux/action';
+import Cartmodal from './CartModal';
 
+const Shopitemscreen = ({navigation, route, account, addToCart}) => {
 
-const Shopitemscreen = ({navigation, route}) => {
+    const [cart, setCart] = useState(false); 
 
     Number.prototype.format = function () {
         return this.toString().split( /(?=(?:\d{3})+(?:\.|$))/g ).join( "," );
@@ -27,6 +31,25 @@ const Shopitemscreen = ({navigation, route}) => {
 
     let {data, name} = route.params;
 
+
+    const addItemToCart = () => {
+        let found = account.cart.some((item) =>  item.key ==  data.key)
+        
+        if(found){
+            Toast.show('Item is already in cart', {
+                duration: Toast.durations.SHORT,
+               });
+        }else {
+            let newCart = {...account, cart: [...account.cart, { price: data.price, quantity, key: data.key, name: data.name}]}
+            addToCart(newCart);
+            console.log(account);
+            Toast.show('Item added to cart', {
+                duration: Toast.durations.SHORT,
+               });
+        }
+        
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             
@@ -36,7 +59,7 @@ const Shopitemscreen = ({navigation, route}) => {
                      <Entypo name="chevron-left" size={30} color="#4b51bc" />
                 </TouchableOpacity>
                 <Text style={styles.topViewText}>{name}</Text>
-                <TouchableOpacity style={styles.iconBox}>
+                <TouchableOpacity style={styles.iconBox} onPress={()=>setCart(true)} >
                      <Entypo name="shopping-cart" size={24} color="#4b51bc" />
                 </TouchableOpacity>
             </View>
@@ -102,11 +125,17 @@ const Shopitemscreen = ({navigation, route}) => {
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.addToCartBtn}>
+                <TouchableOpacity style={styles.addToCartBtn} onPress={addItemToCart}>
                     <Text style={styles.addToCartText}>Add To Cart</Text>
                 </TouchableOpacity>    
                
             </ScrollView>
+
+            {/* ------ Modal ------ */}
+
+            <Cartmodal cart={cart} setCart={setCart} />
+
+
         </SafeAreaView>
     );
 }
@@ -223,6 +252,12 @@ const styles = StyleSheet.create({
          fontSize: 22,
          fontWeight: "500",
      },
-})
+});
 
-export default Shopitemscreen;
+let mapDispatchToProps = { addToCart }
+
+let mapStateToProps = (state) => {
+    return { account: state.loggedInAccount[0] }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Shopitemscreen);

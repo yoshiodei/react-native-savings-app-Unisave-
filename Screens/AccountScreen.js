@@ -18,9 +18,10 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import Slider from "react-native-slide-to-unlock";
+import { connect } from 'react-redux';
 
 // create a component
-const AccountScreen = ({ navigation }) => {
+const AccountScreen = ({ navigation, account }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
@@ -48,10 +49,10 @@ const AccountScreen = ({ navigation }) => {
           </View>
           <View>
             <Text style={{ fontSize: 20, fontWeight: "600", marginBottom: 10 }}>
-              Yoshi Odei
+              {account.fullName}
             </Text>
             <Text style={{ fontSize: 18, color: "#616161" }}>
-              yoshiodei@yahoo.com
+              {account.email}
             </Text>
           </View>
         </View>
@@ -197,5 +198,9 @@ const styles = StyleSheet.create({
   },
 });
 
+let mapStateToProps = (state) => {
+  return { account: state.loggedInAccount[0] }
+}
+
 //make this component available to the app
-export default AccountScreen;
+export default connect(mapStateToProps)(AccountScreen);
